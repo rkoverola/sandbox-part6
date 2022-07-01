@@ -14,14 +14,27 @@ describe('GIVEN anecdoteReducer', () => {
     expect(returnedState).toEqual(stateAtStart)
   })
 
-  // FIXME: Breaks when sorting?
   test('WHEN voting with id THEN increments votes on correct anecdote', () => {
     deepFreeze(stateAtStart)
+    const anecdote = stateAtStart.find(a => a.content === 'Adding manpower to a late software project makes it later!')
     const action = {
       type: 'VOTE',
-      data: { id: stateAtStart[2].id }
+      data: { id: anecdote.id }
     }
     const returnedState = anecdoteReducer(stateAtStart, action)
-    expect(returnedState[2].votes).toBe(stateAtStart[2].votes + 1)
+    const returnedAnecdote = returnedState.find(a => a.content === 'Adding manpower to a late software project makes it later!')
+    expect(returnedAnecdote.votes).toBe(anecdote.votes + 1)
+  })
+
+  test('WHEN calling with add anecdote THEN should add new anecdote to the state', () => {
+    const action = {
+      type: 'ADD',
+      data: {
+        content: 'New anecdote'
+      }
+    }
+    deepFreeze(stateAtStart)
+    const returnedState = anecdoteReducer(stateAtStart, action)
+    expect(returnedState).toHaveLength(stateAtStart.length + 1)
   })
 })

@@ -14,6 +14,13 @@ export const createVoteAction = (id) => {
   }
 }
 
+export const createAddAction = (content) => {
+  return {
+    type: 'ADD',
+    data: { content }
+  }
+}
+
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const asObject = (anecdote) => {
@@ -34,6 +41,8 @@ const reducer = (state = initialState, action) => {
     case 'VOTE':
       const id = action.data.id
       return state.map(a => a.id !== id ? a : { ...a, votes: a.votes + 1 })
+    case 'ADD':
+      return state.concat(asObject(action.data.content))
     default:
       return state
   }
