@@ -5,7 +5,8 @@ import App from './App'
 
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import noteReducer from './reducers/noteReducer'
+import noteReducer, { setNotes } from './reducers/noteReducer'
+import noteService from './services/notes'
 import filterReducer from './reducers/filterReducer'
 
 import { createNote } from './reducers/noteReducer'
@@ -27,6 +28,5 @@ store.dispatch(createNote('combineReducers forms one reducer from many simple re
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <App />
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 )
