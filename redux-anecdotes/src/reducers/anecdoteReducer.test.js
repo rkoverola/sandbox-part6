@@ -17,9 +17,10 @@ describe('GIVEN anecdoteReducer', () => {
   test('WHEN voting with id THEN increments votes on correct anecdote', () => {
     deepFreeze(stateAtStart)
     const anecdote = stateAtStart.find(a => a.content === 'Adding manpower to a late software project makes it later!')
+    console.log('GOT', anecdote)
     const action = {
-      type: 'VOTE',
-      data: { id: anecdote.id }
+      type: 'anecdotes/vote',
+      payload: { id: anecdote.id }
     }
     const returnedState = anecdoteReducer(stateAtStart, action)
     const returnedAnecdote = returnedState.find(a => a.content === 'Adding manpower to a late software project makes it later!')
@@ -28,8 +29,8 @@ describe('GIVEN anecdoteReducer', () => {
 
   test('WHEN calling with add anecdote THEN should add new anecdote to the state', () => {
     const action = {
-      type: 'ADD',
-      data: {
+      type: 'anecdotes/add',
+      payload: {
         content: 'New anecdote'
       }
     }
