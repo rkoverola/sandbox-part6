@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -19,14 +19,13 @@ const asObject = (anecdote) => {
   }
 }
 
-export const initialState = anecdotesAtStart.map(asObject)
+export const initialState = []
 
 const anecdoteSlice = createSlice({
   name: 'anecdotes',
   initialState,
   reducers: {
     vote(state, action) {
-      // FIXME: id here sometimes wrapped in object sometimes not, what is the correct way?
       const id = action.payload
       const anecdote = state.find(a => a.id === id)
       const changedAnecdote = {
@@ -39,9 +38,17 @@ const anecdoteSlice = createSlice({
       const content = action.payload
       const anecdote = asObject(content)
       state.push(anecdote)
+    },
+    setAnecdotes(state, action) {
+      console.log('Setting state to', current(state), action.payload)
+      return action.payload
+    },
+    appendAnecdote(state, action) {
+      console.log('Appending', action.payload)
+      state.push(action.payload)
     }
   }
 })
 
-export const { vote, add } = anecdoteSlice.actions
+export const { vote, add, setAnecdotes, appendAnecdote } = anecdoteSlice.actions
 export default anecdoteSlice.reducer
