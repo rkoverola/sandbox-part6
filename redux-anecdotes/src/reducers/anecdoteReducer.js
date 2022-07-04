@@ -26,7 +26,8 @@ const anecdoteSlice = createSlice({
   initialState,
   reducers: {
     vote(state, action) {
-      const id = action.payload.id
+      // FIXME: id here sometimes wrapped in object sometimes not, what is the correct way?
+      const id = action.payload
       const anecdote = state.find(a => a.id === id)
       const changedAnecdote = {
         ...anecdote,

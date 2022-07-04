@@ -1,16 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = { notification: 'Hello' }
+export const initialState = { message: '' }
 
 const notificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
-    getNotification(state, action) {
-      return 'Hello world'
+    // FIXME: Getter not needed?
+    get(state, action) {
+      return state
+    },
+    set(state, action) {
+      state.message = action.payload
+    },
+    remove(state, action) {
+      const message = action.payload
+      console.log('Comparing', message, state.message)
+      if(message === state.message) {
+        state.message = ''
+      }
     }
   }
 })
 
-export const { getNotification } = notificationSlice.actions
+export const { get, set, remove } = notificationSlice.actions
 export default notificationSlice.reducer

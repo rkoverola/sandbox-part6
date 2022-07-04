@@ -20,7 +20,7 @@ describe('GIVEN anecdoteReducer', () => {
     console.log('GOT', anecdote)
     const action = {
       type: 'anecdotes/vote',
-      payload: { id: anecdote.id }
+      payload: anecdote.id
     }
     const returnedState = anecdoteReducer(stateAtStart, action)
     const returnedAnecdote = returnedState.find(a => a.content === 'Adding manpower to a late software project makes it later!')
@@ -30,9 +30,7 @@ describe('GIVEN anecdoteReducer', () => {
   test('WHEN calling with add anecdote THEN should add new anecdote to the state', () => {
     const action = {
       type: 'anecdotes/add',
-      payload: {
-        content: 'New anecdote'
-      }
+      payload: 'New anecdote'
     }
     deepFreeze(stateAtStart)
     const returnedState = anecdoteReducer(stateAtStart, action)
