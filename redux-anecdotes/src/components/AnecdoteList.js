@@ -3,9 +3,15 @@ import { vote } from '../reducers/anecdoteReducer'
 import { set, remove } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state.anecdotes)
-  console.log('Got anecdotes', anecdotes)
+
   const dispatch = useDispatch()
+  const rawAnecdotes = useSelector(state => state.anecdotes)
+  const filterObject = useSelector(state => state.filter)
+  const filter = filterObject.filter.toLowerCase()
+  console.log('Filter in list is', filter)
+  const anecdotes = rawAnecdotes.filter(a => a.content.toLowerCase().includes(filter))
+  console.log('Got anecdotes', rawAnecdotes)
+  
 
   const flashNotification = (notification) => {   
     dispatch(set(notification))
