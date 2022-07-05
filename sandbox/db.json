@@ -24,6 +24,16 @@
       "content": "hello",
       "important": false,
       "id": 5
+    },
+    {
+      "content": "combineReducers forms one reducer from many simple reducers",
+      "important": false,
+      "id": 6
+    },
+    {
+      "content": "combineReducers forms one reducer from many simple reducers",
+      "important": false,
+      "id": 7
     }
   ]
 }
