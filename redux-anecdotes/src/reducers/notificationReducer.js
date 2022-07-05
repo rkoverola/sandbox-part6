@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-export const initialState = { message: '' }
+export const initialState = { message: '', currentTimeoutId: 0 }
 
 const notificationSlice = createSlice({
   name: 'notification',
@@ -13,25 +13,30 @@ const notificationSlice = createSlice({
     set(state, action) {
       state.message = action.payload
     },
-    remove(state, action) {
-      const message = action.payload
-      console.log('Comparing', message, state.message)
-      if(message === state.message) {
-        state.message = ''
-      }
+    setTimeoutId(state, action) {
+      state.currentTimeoutId = action.payload
+    },
+    clearCurrentTimeout(state, action) {
+      clearTimeout(state.currentTimeoutId)
+    },
+    removeNotification(state, action) {
+      state.message = ''
     }
   }
 })
 
-export const { get, set, remove } = notificationSlice.actions
+export const { get, set, setTimeoutId, clearCurrentTimeout, removeNotification } = notificationSlice.actions
 
 export const setNotification = (message, upTime) => {
   return async dispatch => {
-    const timeInMilliseconds = upTime * 1000
+    dispatch(clearCurrentTimeout())
     dispatch(set(message))
-    setTimeout(() => {
-      dispatch(remove(message))
+
+    const timeInMilliseconds = upTime * 1000
+    const timeoutId = setTimeout(() => {
+      dispatch(removeNotification())
     }, timeInMilliseconds)
+    dispatch(setTimeoutId(timeoutId))
   }
 }
 
