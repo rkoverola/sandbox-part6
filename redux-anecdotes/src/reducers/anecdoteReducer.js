@@ -18,6 +18,7 @@ const anecdoteSlice = createSlice({
   initialState,
   reducers: {
     vote(state, action) {
+      console.log('Calling local vote with', action.payload)
       const id = action.payload
       const anecdote = state.find(a => a.id === id)
       const changedAnecdote = {
@@ -41,6 +42,17 @@ const anecdoteSlice = createSlice({
     }
   }
 })
+
+export const voteForAnecdote = (id, anecdote) => {
+  return async dispatch => {
+    const updatedAnecdote = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+    await anecdoteService.update(id, updatedAnecdote)
+    dispatch(vote(id))
+  }
+}
 
 export const createAnecdote = (content) => {
   return async dispatch => {
